@@ -1,1 +1,1 @@
-# demine
+# minesweeper
