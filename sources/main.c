@@ -11,6 +11,7 @@
 
 char JEU[10][10];//grille de jeu 
 int i,j;//i les lignes, j les colonnes
+int x,y;//x les ligne des mines, y les colonnes des mines
 char MINES[10][10];//la grille avec les mines
 int N;//Nombre de mines autour
 
@@ -123,8 +124,11 @@ int check_win(int NbMines)
 int main()
 {
     int NbMines;//le nombre de mines choisi par le joueur
-    int CompteMines;//compteur de mines
+    int CompteMines = 0;//compteur de mines
     int choix;//le choix effectué par le joueur pour découvrir ou placer un drapeau
+
+    x = 500;
+    y = 500;
     srand(time(NULL));       
     //Afficher le début du jeu
     printf(" ________________________________\n");
@@ -145,26 +149,6 @@ int main()
     }
     while(NbMines>=30);
     printf("D'accord, vous avez choisi de jouer avec %d mines\n\n",NbMines);
-    //////////////////////////////
-    // Initialisation des mines //
-    //////////////////////////////
-    for (CompteMines=0;CompteMines<NbMines;CompteMines++) {  
-        i=rand()%10;//on choisit la ligne de manière aléatoire
-        j=rand()%10;//on choisit la colonne de manière aléatoire
-        if(MINES[i][j]=='0') {//On vérifie que la case est libre
-            MINES[i][j]='M';//on place un M pour indiquer qu'il y a une mine
-        } else {
-            CompteMines--;//Sinon, il y a déjà un M et il faut faire un tour de plus
-        }
-    }
-    //Pour vérifier on affiche la grille des mines
-    printf("Voici la grille des mines :\n");
-    for(i=0;i<10;i++) {
-        for(j=0;j<10;j++) {
-            printf("%c  ",MINES[i][j]);
-        }
-        printf("\n");
-    }
     ////////////////////////////
     // Démarrage de la partie //
     ////////////////////////////
@@ -199,6 +183,18 @@ int main()
             scanf("%d",&choix);
         } while (choix<0 || choix>2);
         // Choix : dévoiler une case ou placer un drapeau
+        //////////////////////////////
+        // Initialisation des mines //
+        //////////////////////////////
+        for (;CompteMines<NbMines ;CompteMines++) {  
+            x=rand()%10;//on choisit la ligne de manière aléatoire
+            y=rand()%10;//on choisit la colonne de manière aléatoire
+            if(MINES[x][y]=='0' && x != i && y != j) {//On vérifie que la case est libre
+                MINES[x][y]='M';//on place un M pour indiquer qu'il y a une mine
+            } else {
+                CompteMines--;//Sinon, il y a déjà un M et il faut faire un tour de plus
+            }
+        }
         switch (choix) {
             case 1 : //fonction devoile mines autour
                 if(MINES[i][j]=='M') {
