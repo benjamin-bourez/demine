@@ -189,7 +189,7 @@ int main()
         for (;CompteMines<NbMines ;CompteMines++) {  
             x=rand()%10;//on choisit la ligne de manière aléatoire
             y=rand()%10;//on choisit la colonne de manière aléatoire
-            if(MINES[x][y]=='0' && x != i && y != j) {//On vérifie que la case est libre
+            if(MINES[x][y]=='0' && (x < i - 1 || x > i + 1) && (y < j - 1 || y > j + 1)) {//On vérifie que la case est libre
                 MINES[x][y]='M';//on place un M pour indiquer qu'il y a une mine
             } else {
                 CompteMines--;//Sinon, il y a déjà un M et il faut faire un tour de plus
